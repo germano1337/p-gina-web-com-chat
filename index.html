@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. Robot - Assistente Virtual</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+    <style>
+        :root {
+            --primary-color: #00bfff; /* Deep Sky Blue */
+            --background-color: #0a0a1a;
+            --text-color: #e0e0e0;
+            --container-bg: rgba(10, 25, 47, 0.8);
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+
+        body {
+            background-color: var(--background-color);
+            background-image: radial-gradient(circle at top right, rgba(0, 191, 255, 0.1), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(0, 191, 255, 0.1), transparent 40%);
+            color: var(--text-color);
+            font-family: 'Roboto Mono', monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .main-container {
+            background-color: var(--container-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.2), 0 0 40px rgba(0, 191, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            position: relative;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+            animation: flicker 3s infinite alternate;
+            margin-bottom: 10px;
+        }
+
+        /* Animação para o efeito de neon piscando */
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow:
+                0 0 4px var(--primary-color),
+                0 0 11px var(--primary-color),
+                0 0 19px var(--primary-color),
+                0 0 40px var(--primary-color),
+                0 0 80px var(--primary-color);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        .content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .future-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .future-section h2 {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            text-align: left;
+        }
+
+        .news-item {
+            background-color: rgba(0, 191, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .news-item:hover {
+            background-color: rgba(0, 191, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .news-item h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .news-item p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .news-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 700;
+            align-self: flex-end;
+        }
+
+        /* Estilos para o Dialogflow Messenger */
+        df-messenger {
+            z-index: 999;
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            --df-messenger-font-color: #fff;
+            --df-messenger-font-family: 'Roboto Mono', monospace;
+            --df-messenger-chat-background: #1e1e2f;
+            --df-messenger-message-user-background: #007acc;
+            --df-messenger-message-bot-background: #3a3a50;
+            --df-messenger-send-icon: #00bfff;
+            --df-messenger-input-placeholder-font-color: #ccc;
+            --df-messenger-input-font-color: #000000; /* Preto para o texto de entrada */
+            --df-messenger-input-box-color: #e0e0e0; /* Fundo claro para a caixa de texto */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>Bem-vindo ao Mr. Robot!</h1>
+        </header>
+        <main class="content">
+            <p>Eu sou seu assistente virtual. Clique no ícone de chat no canto para começar.</p>
+        </main>
+        <section class="future-section">
+            <h2>Últimas Notícias de Tecnologia</h2>
+            <div class="news-container">
+                <div class="news-item">
+                    <h3>Nova Geração de IA Anunciada</h3>
+                    <p>Empresas de tecnologia revelam avanços em modelos de linguagem que prometem revolucionar a interação homem-máquina.</p>
+                    <a href="#">Leia mais &rarr;</a>
+                </div>
+                <div class="news-item">
+                    <h3>Computação Quântica Atinge Novo Marco</h3>
+                    <p>Pesquisadores conseguem manter a estabilidade de qubits por um tempo recorde, abrindo portas para novos cálculos complexos.</p>
+                    <a href="#">Leia mais &rarr;</a>
+                </div>
+                <div class="news-item">
+                    <h3>O Futuro da Realidade Aumentada</h3>
+                    <p>Novos dispositivos mais leves e com maior capacidade de processamento estão chegando ao mercado consumidor.</p>
+                    <a href="#">Leia mais &rarr;</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <df-messenger
+      project-id="bootcam-llm-ai3"
+      agent-id="cdc29c59-c4a7-45db-bd5a-5ffb627fe569"
+      language-code="pt-br"
+      max-query-length="-1">
+      <df-messenger-chat-bubble chat-title="GermanoMR"></df-messenger-chat-bubble>
+    </df-messenger>
+</body>
+</html>
